@@ -42,7 +42,7 @@
 import { useDispatch } from 'react-redux';
 import { deleteContact } from '../../redux/contactsSlice';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { Confirm } from 'notiflix/build/notiflix-confirm-aio';
+// import { Confirm } from 'notiflix/build/notiflix-confirm-aio';
 
 import css from './ContactsListItem.module.css';
 
