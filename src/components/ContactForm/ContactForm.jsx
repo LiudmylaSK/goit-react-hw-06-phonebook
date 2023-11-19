@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getContacts } from '../../redux/selectors';
 import { addContact } from '../../redux/contactsSlice';
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import css from './ContactForm.module.css';
 
@@ -13,16 +12,19 @@ import css from './ContactForm.module.css';
   const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
 
+   
+      
   const handleSubmit = event => {
     event.preventDefault();
-    console.log(contacts)
 
-    const isExist = contacts.some(
+
+
+    const contactExist = contacts.some(
       contact => contact.name.toLowerCase().trim() === name.toLowerCase().trim()
     );
 
-    if (isExist) {
-      Notify.info(`${name} is already in your contacts`);
+    if (contactExist) {
+      alert(`${name} is already in your contacts`);
       return;
     }
 
@@ -31,22 +33,23 @@ import css from './ContactForm.module.css';
     setNumber('');
   };
 
-  const handleChange = event => {
-    const { name, value } = event.target;
+      
+      
+const handleChange = ({ target: { name, value } }) => {
+  switch (name) {
+    case 'name':
+      setName(value);
+      break;
 
-    switch (name) {
-      case 'name':
-        setName(value);
-        break;
+    case 'number':
+      setNumber(value);
+      break;
 
-      case 'number':
-        setNumber(value);
-        break;
+    default:
+      break;
+  }
+};
 
-      default:
-        break;
-    }
-  };
 
 
   return (
@@ -85,19 +88,3 @@ import css from './ContactForm.module.css';
     </>
   );
 };
-
-
-
-
-Notify.init({
-  borderRadius: '10px',
-  position: 'center-top',
-  width: '300px',
-  timeout: 4000,
-  clickToClose: true,
-  cssAnimationStyle: 'zoom',
-  info: {
-    background: '#f2e230',
-    textColor: '#00f',
-  },
-});
